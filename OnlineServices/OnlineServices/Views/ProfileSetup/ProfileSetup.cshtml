@@ -1,0 +1,728 @@
+﻿@using OnlineServices.Models
+@model ProfilingModel
+@*@using MathCaptcha;*@
+@*@using CaptchaMvc;
+@using CaptchaMvc.HtmlHelpers*@ 
+@using Recaptcha;
+
+ @*<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">*@
+@*<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">*@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#myModal").modal('show');
+    });
+</script>
+@{
+    ViewBag.Title = "ProfileSetup";
+    Layout = "~/Views/Shared/_ProfilePage.cshtml";
+    BussinessLogic.Implementation.Register reg = new BussinessLogic.Implementation.Register();
+    var users = reg.UserByIdentifier(Session["userid"].ToString()).SingleOrDefault();
+}
+<script src='https://www.google.com/recaptcha/api.js'></script>
+
+<div class="app-form col-md-12" style="padding: 0">
+    <div class="page-title" style="margin: 0">
+        
+                    <div class="col-md-4" style="background-color:#ffffff;height:95px">
+                        <img src="/Images/comp.jpg" class="img-responsive" style="padding-top: 15px; padding-left:20px" />
+                    </div>
+                    <div class="col-md-8 boi-blue">
+                        <span>Profile Setup</span>
+                    </div>           
+
+                        
+    </div>
+</div>
+<br />
+    <!-- Nav tabs -->
+
+      @if (TempData["Please"] != null)
+      {
+        <div class="alert alert-danger">
+            @TempData["Please"].ToString();
+            <a href="#" class="close">&times;</a>
+        </div>
+      }
+      @if(users.IsApproved==false)
+        {
+      <div>
+    @if (Session["Success"] != null)
+    {
+        <div class="alert alert-success">
+            @Session["Success"].ToString();
+            <a href="#" class="close">&times;</a>
+        </div>
+    }
+</div>
+      }
+
+<div class="prof_style">
+    <ul class="nav nav-tabs prof_style" role="tablist">
+        <li role="presentation" class="active">
+            <a href="#home" role="tab" aria-controls="home" data-toggle="tab">
+                <i class="fa fa-home"></i> Complete your Profile
+            </a>
+        </li>
+@if(users.IsApproved==true)
+        {
+        <li role="presentation">
+            <a href="#profile" role="tab" aria-controls="profile" data-toggle="tab">
+                <i class="fa fa-user"></i> Add a Service
+            </a>
+        </li>
+}
+     @if(users.IsApproved==false)
+        {
+         <li role="presentation">
+            <a href="#profile" role="tab" aria-controls="profile" data-toggle="tab">
+                <i class="fa fa-user"></i> Add a Service
+            </a>
+        </li>
+        <li role="presentation">
+            <a href="#regcode" role="tab" aria-controls="regcode" data-toggle="tab">
+                <i class="fa fa-user"></i> Insert your Reg code
+            </a>
+        </li>
+      }
+    </ul>
+    
+    <!-- Tab panes -->
+    <div class="col-md-12 tab-bg">
+        <div class="tab-content">
+
+    <div role="tabpanel" class="tab-pane fade active in" id="home">
+        <section class="main">
+           
+
+            @using (Html.BeginForm("ProfileSetup", "ProfileSetup", FormMethod.Post, new { @id = "msform", @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+                    {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true);
+
+                <div>
+                    @if (TempData["Empty"] != null)
+                            {
+                        <div class="alert alert-danger">
+                            @TempData["Empty"].ToString();
+                            <a href="#" class="close">&times;</a>
+                        </div>
+                            }
+                </div>
+                <div>
+                    @if (TempData["duplicate"] != null)
+                            {
+                        <div class="alert alert-danger">
+                            @TempData["duplicate"].ToString();
+                            <a href="#" class="close">&times;</a>
+                        </div>
+                            }
+                </div>
+                 <div>
+                        @if (TempData["Success"] != null)
+                        {
+                            <div class="alert alert-success">
+                                @TempData["Success"].ToString();
+                                <a href="#" class="close">&times;</a>
+                            </div>
+                        }
+                    </div>
+
+    <div>
+        @if (TempData["service"] != null)
+                            {
+            <div class="alert alert-success">
+                @TempData["service"].ToString();
+                <a href="#" class="close">&times;</a>
+            </div>
+
+    <button class="btn btn-primary" onclick="location.href='/ProfileSetup/ProfilePage'">Go to your Profile</button>
+                            }
+                            
+        
+    </div>
+                                  
+            <!-- progressbar -->
+                <ul id="progressbar"></ul>
+            <!-- fieldsets -->
+                @*<fieldset>*@
+                <div class="row ">
+                    <div id="avarta">
+                        <div class="text-center">
+
+                            <img id="preview" src="~/Content/images/holdIt.jpg" class="avatar img-circle img-thumbnail" alt="avatar">
+                        </div>
+                    </div>
+                </div>
+                <h2 class="fs-title"></h2>
+                <div class="row ">
+                    <div class="form-group">
+                        <div class="col-md-4 col-md-offset-4">
+                            @Html.TextBoxFor(x => x.FirstName, new { @class = "", placeholder = "First Name", tabindex = "1", @readonly = "readonly" })
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-4 col-md-offset-4">
+                            @Html.TextBoxFor(x => x.LastName, new { @class = "", placeholder = "Last Name", tabindex = "1", @readonly = "readonly" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-4 col-md-offset-4">
+                            @Html.TextBoxFor(x => x.Email, new { @class = "", placeholder = "Email", tabindex = "1", @readonly = "readonly" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-4 col-md-offset-4">
+                            @Html.TextBoxFor(x => x.PhoneNumber, new { @class = "input-md", placeholder = "Phone Number", tabindex = "1", @readonly = "readonly" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-4 col-md-offset-4">
+                            @Html.DropDownListFor(model => model.CountryId, Model.countryList, "Select Country", new { @id = "countryId", tabindex = "1", @class = "form-control input-md" })
+                            <span id="states-loading-progress" style="display: none;">Please wait..</span>
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        <div class="col-md-4 col-md-offset-4">
+                            @Html.DropDownListFor(x => x.StateId, Model.stateList, "Select State", new { @id = "StateId", tabindex = "1", @class = " form-control input-md " })
+                            <span id="states1-loading-progress" style="display: none;">Please wait..</span>
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        <div class="col-md-4 col-md-offset-4">
+                            @Html.DropDownListFor(x => x.LGAId, Model.LGAList, "Select Local Govt", new { @id = "lgaId", tabindex = "1", @class = " form-control input-md" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-4 col-md-offset-4">
+                            @Html.TextAreaFor(x => x.HomeAddress, new { @class = "", placeholder = "Contact Person Address", tabindex = "1", @readonly = "readonly" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-4 col-md-offset-4">
+                            @Html.TextAreaFor(x => x.MissionStatement, new { @class = "", placeholder = "Terms and condition aggreement", tabindex = "1", @required = "" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-4 col-md-offset-4">
+                            @Html.TextAreaFor(x => x.Skills, new { @class = "", placeholder = "Certifications", tabindex = "1", @required = "" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-4 col-md-offset-4">
+                            Display Image
+                        </div>
+                        <div class="col-md-4 col-md-offset-4">
+                            <input type="file" name="uploadedFile" id="fileuploader" required />
+                           
+                        </div>
+                    </div>
+                    
+                        <input type="submit" name="submit" class="submit action-button" value="Submit" @*style="margin-right:35%"*@ />
+                   
+                </div>
+                @*</fieldset>*@
+                    }
+
+        </section>
+    </div>
+
+
+
+    <div role="tabpanel" class="tab-pane fade" id="profile">
+
+        <section class="main">
+
+            @using (Html.BeginForm("UserServices", "ProfileSetup", FormMethod.Post, new { @id = "msform", @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+                    {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true);
+
+                <div>
+                    @if (TempData["Empty"] != null)
+                            {
+                        <div class="alert alert-danger">
+                            @TempData["Empty"].ToString();
+                            <a href="#" class="close">&times;</a>
+                        </div>
+                            }
+                </div>
+                <div>
+                    @if (TempData["duplicate"] != null)
+                            {
+                        <div class="alert alert-danger">
+                            @TempData["duplicate"].ToString();
+                            <a href="#" class="close">&times;</a>
+                        </div>
+                            }
+                </div>
+                @*<div>
+                    @if (Session["Success"] != null)
+                            {
+                        <div class="alert alert-success">
+                            @Session["Success"].ToString();
+                            <a href="#" class="close">&times;</a>
+                        </div>
+                            }
+                </div>*@
+            <!-- progressbar -->
+                <ul id="progressbar"></ul>
+            <!-- fieldsets -->
+                @*<fieldset>*@
+                <h2 class="fs-title"></h2>
+                <div class="row ">
+                    <div class="form-group">
+                        <div class="col-md-4 col-md-offset-4">
+                            @Html.DropDownListFor(model => model.ServiceId, Model.ServiceList, "Select Service Category", new { @id = "serviceId", tabindex = "1", @class = "form-control input-md" })
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-4 col-md-offset-4">
+                            @Html.TextBoxFor(x => x.ServiceName, new { @class = "", placeholder = "Service Name", tabindex = "1", @required="" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-4 col-md-offset-4">
+                            @Html.TextAreaFor(x => x.ServiceDes, new { @class = "", placeholder = "Service Description", tabindex = "1", @required="" })
+                        </div> 
+                    </div>
+                    @*<div class="form-group">
+                            <div class="col-md-4 col-md-offset-4">
+                                @Html.TextBoxFor(x => x.PhoneNumber, new { @class = "input-md", placeholder = "Phone Number", tabindex = "1", @readonly = "readonly" })
+                            </div>
+                        </div>*@
+                    <div class="form-group">
+                        <div class="col-md-4 col-md-offset-4">
+                            @Html.DropDownListFor(model => model.CountryId, Model.countryList, "Select Country", new { @id = "countryId", tabindex = "1", @class = "form-control input-md" })
+                            <span id="states-loading-progress" style="display: none;">Please wait..</span>
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        <div class="col-md-4 col-md-offset-4">
+                            @Html.DropDownListFor(x => x.StateId, Model.stateList, "Select State", new { @id = "StateId", tabindex = "1", @class = " form-control input-md " })
+                            <span id="states1-loading-progress" style="display: none;">Please wait..</span>
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        <div class="col-md-4 col-md-offset-4">
+                            @Html.DropDownListFor(x => x.LGAId, Model.LGAList, "Select Local Govt", new { @id = "lgaId", tabindex = "1", @class = " form-control input-md" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-4 col-md-offset-4">
+                            @Html.TextAreaFor(x => x.HomeAddress, new { @class = "", placeholder = "Full Office Address", tabindex = "1" })
+                        </div>
+                    </div>
+                    @*<div class="form-group">
+                            <div class="col-md-4 col-md-offset-4">
+                                @Html.TextAreaFor(x => x.MissionStatement, new { @class = "", placeholder = "Terms and condition aggreement", tabindex = "1" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-4 col-md-offset-4">
+                                @Html.TextAreaFor(x => x.Skills, new { @class = "", placeholder = "Certifications", tabindex = "1" })
+                            </div>
+                        </div>*@
+                    <div class="form-group">
+                        <div class="col-md-4 col-md-offset-4">
+                            Uploaded Images to depict your services<i>(optional)</i>
+                        </div>
+                        <div class="col-md-4 col-md-offset-4">
+                            <input type="file" name="uploadedFile" id="fileuploader" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+
+                        Are you a human?
+                    </div>
+                    <div class="col-md-4 col-md-offset-4">
+                        @Html.Raw(Html.GenerateCaptcha("captcha", "clean"))
+                        @Html.ValidationMessage("captcha")
+                    </div>
+                    <div class="g-recaptcha col-md-4 col-md-offset-4" data-sitekey="6Ld7Cg8TAAAAALk8KojqZ4pQprcU0ezJUTG8qtFc"></div>
+                </div>
+            <input type="submit" name="submit" class="submit action-button"  value="Submit"   />
+                 @*<a class="btn form-control h3 " href="~/ProfileSetup/ProfilePage" style="color: white; background-color:#00a65a; height:50%; width:10%"> SUBMIT</a>*@
+
+
+                    }
+            
+        </section>
+
+    </div>
+
+
+    <div role="tabpanel" class="tab-pane fade" id="regcode">
+         
+        <section class="main">
+                   <h4 class="col-offset-lg-4">Please Insert the  Registration Code sent to your phone</h4>
+            @using (Html.BeginForm("VerifyCode", "ProfileSetup", FormMethod.Post, new { @id = "msform", @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+                    {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true);
+				
+				 <div>
+                    @if (TempData["regcode"] != null)
+                            {
+                        <div class="alert alert-danger">
+                            @TempData["regcode"].ToString();
+                            <a href="#" class="close">&times;</a>
+                        </div>
+                            }
+                </div>
+            <!-- progressbar -->
+                <ul id="progressbar"></ul>
+            <!-- fieldsets -->
+                @*<fieldset>*@
+                <h2 class="fs-title"></h2>
+                <div class="row ">
+                    <div class="form-group">
+                        <div class="col-md-4 col-md-offset-4">
+                            @Html.TextBoxFor(x => x.RegCode, new { @class = "", placeholder = "Registration Code", tabindex = "1" })
+
+                        </div>
+                    </div>
+                    
+                     <input type="submit" name="submit" class="submit action-button" value="Submit" @*style="margin-right:35%"*@ />
+					 
+                   
+
+                </div>
+}
+        </div>
+
+
+        @if (users.IsApproved == false)
+            {
+    
+                            
+
+  <!-- Modal -->
+ <div id="myModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" align="center"><img src="~/favicon.ico" /> Registration successful</h4>
+
+            </div>
+            <div class="modal-body">
+                <p class="text-success" align="center"><b>Registration Sucessful.Please wait a bit for <span class="text-danger">Approval </span>from the Admin and Please check your mail.</b></p>
+                <h3 align="center">OR</h3>
+                <p class="text-success" align="center"><b>Please wait until you receive an sms from FindUs</b> </p>
+                <div align="center">
+                    <p>@TempData["LoginCredentials"]</p>
+                    <p>@TempData["Usename"]</p>
+                    <p>@TempData["Password"]</p>
+                </div>
+               
+                <div align="center"><button type="button" class="btn btn-primary"  onclick="myFunction()" >Click here after you have received a text Message</button></div>
+                <div align="center" class="text-danger">You haven't recieved  a text message</div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                @*<button type="button" class="btn btn-primary">Save changes</button>*@
+            </div>
+        </div>
+    </div>
+</div>
+}
+
+    </div>
+
+
+
+
+    @*<!-- jQuery -->
+        <script src="~/Scripts/jquery-1.10.1.min.js" type="text/javascript"></script>
+        <!-- jQuery easing plugin -->*@
+    <script src="~/Scripts/jquery.easing.min.js" type="text/javascript"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script>
+        function myFunction() {
+            location.reload();
+        }
+        function gotoprofile() {
+
+        }
+        $(document).ready(function () {
+            $("#foot").hide();
+            $("#break").hide();
+
+
+
+            $("#countryId").change(function () {
+                var selectedItem = $(this).val();
+                var ddlStates = $("#StateId");
+                //("#states - loading - progress").show();
+                $.ajax({
+                    cache: false,
+                    type: "GET",
+                    url: "@(Url.RouteUrl("GetStatesByCountryId"))",
+                    data: { "countryId": selectedItem },
+                success: function (data) {
+                    //("#states - loading - progress").hide();
+                    ddlStates.html('');
+                    $.each(data, function (id, option) {
+                        ddlStates.append($('<option></option>').val(option.id).html(option.name));
+                        //$("#LgaId").val(loadsub())
+                    });
+
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert('Failed to retrieve states.');
+
+                }
+            });
+
+
+        });
+
+
+        $("#StateId").change(function () {
+            var selectedItem = $(this).val();
+            var ddlStates = $("#lgaId");
+            var statesProgress = $("#states-loading-progress");
+            statesProgress.show();
+            $.ajax({
+                cache: false,
+                type: "GET",
+                url: "@(Url.RouteUrl("GetLagBystateId"))",
+                data: { "StateId": selectedItem },
+            success: function (data) {
+                ddlStates.html('');
+                $.each(data, function (id, option) {
+                    ddlStates.append($('<option></option>').val(option.id).html(option.name));
+                });
+                statesProgress.hide();
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert('Failed to retrieve states.');
+                statesProgress.hide();
+            }
+        });
+        });
+
+
+        });
+
+
+        $("#fileuploader").change(function () {
+            readIMG(this);
+        });
+
+
+
+
+        $("#countryId").change(function () {
+            var selectedItem = $(this).val();
+            var ddlStates = $("#StateId");
+            //("#states - loading - progress").show();
+            $.ajax({
+                cache: false,
+                type: "GET",
+                url: "@(Url.RouteUrl("GetStatesByCountryId"))",
+                data: { "countryId": selectedItem },
+                success: function (data) {
+                    //("#states - loading - progress").hide();
+                    ddlStates.html('');
+                    $.each(data, function (id, option) {
+                        ddlStates.append($('<option></option>').val(option.id).html(option.name));
+                        //$("#LgaId").val(loadsub())
+                    });
+
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert('Failed to retrieve states.');
+
+                }
+            });
+
+
+        });
+
+
+        //$.ajax({
+        //    url: location.href,
+        //    success: 
+        
+
+
+        $("#StateId").change(function () {
+            var selectedItem = $(this).val();
+            var ddlStates = $("#lgaId");
+            var statesProgress = $("#states-loading-progress");
+            statesProgress.show();
+            $.ajax({
+                cache: false,
+                type: "GET",
+                url: "@(Url.RouteUrl("GetLagBystateId"))",
+                data: { "StateId": selectedItem },
+                success: function (data) {
+                    ddlStates.html('');
+                    $.each(data, function (id, option) {
+                        ddlStates.append($('<option></option>').val(option.id).html(option.name));
+                    });
+                    statesProgress.hide();
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert('Failed to retrieve states.');
+                    statesProgress.hide();
+                }
+            });
+        });
+
+
+        $("#officecountryId").change(function () {
+            var selectedItem = $(this).val();
+            var ddlStates = $("#officeStateId");
+            //("#states - loading - progress").show();
+            $.ajax({
+                cache: false,
+                type: "GET",
+                url: "@(Url.RouteUrl("GetStatesByCountryId"))",
+                data: { "countryId": selectedItem },
+                success: function (data) {
+                    //("#states - loading - progress").hide();
+                    ddlStates.html('');
+                    $.each(data, function (id, option) {
+                        ddlStates.append($('<option></option>').val(option.id).html(option.name));
+                        //$("#LgaId").val(loadsub())
+                    });
+
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert('Failed to retrieve states.');
+
+                }
+            });
+
+
+        });
+
+
+        $("#officeStateId").change(function () {
+            var selectedItem = $(this).val();
+            var ddlStates = $("#officelgaId");
+            var statesProgress = $("#states-loading-progress");
+            statesProgress.show();
+            $.ajax({
+                cache: false,
+                type: "GET",
+                url: "@(Url.RouteUrl("GetLagBystateId"))",
+                data: { "StateId": selectedItem },
+                success: function (data) {
+                    ddlStates.html('');
+                    $.each(data, function (id, option) {
+                        ddlStates.append($('<option></option>').val(option.id).html(option.name));
+                    });
+                    statesProgress.hide();
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert('Failed to retrieve states.');
+                    statesProgress.hide();
+                }
+            });
+        });
+
+        function readIMG(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#preview').attr('src', e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+        $(function () {
+
+            //jQuery time
+            var current_fs, next_fs, previous_fs; //fieldsets
+            var left, opacity, scale; //fieldset properties which we will animate
+            var animating; //flag to prevent quick multi-click glitches
+
+            $(".next").click(function () {
+                if (animating) return false;
+                animating = true;
+
+                current_fs = $(this).parent();
+                next_fs = $(this).parent().next();
+
+                //activate next step on progressbar using the index of next_fs
+                $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+
+                //show the next fieldset
+                next_fs.show();
+                //hide the current fieldset with style
+                current_fs.animate({ opacity: 0 }, {
+                    step: function (now, mx) {
+                        //as the opacity of current_fs reduces to 0 - stored in "now"
+                        //1. scale current_fs down to 80%
+                        scale = 1 - (1 - now) * 0.2;
+                        //2. bring next_fs from the right(50%)
+                        left = (now * 50) + "%";
+                        //3. increase opacity of next_fs to 1 as it moves in
+                        opacity = 1 - now;
+                        current_fs.css({ 'transform': 'scale(' + scale + ')' });
+                        next_fs.css({ 'left': left, 'opacity': opacity });
+                    },
+                    duration: 800,
+                    complete: function () {
+                        current_fs.hide();
+                        animating = false;
+                    },
+                    //this comes from the custom easing plugin
+                    easing: 'easeInOutBack'
+                });
+            });
+
+            $(".previous").click(function () {
+                if (animating) return false;
+                animating = true;
+
+                current_fs = $(this).parent();
+                previous_fs = $(this).parent().prev();
+
+                //de-activate current step on progressbar
+                $("#progressbar li").eq($("fieldset").index(current_fs)).removeClass("active");
+
+                //show the previous fieldset
+                previous_fs.show();
+                //hide the current fieldset with style
+                current_fs.animate({ opacity: 0 }, {
+                    step: function (now, mx) {
+                        //as the opacity of current_fs reduces to 0 - stored in "now"
+                        //1. scale previous_fs from 80% to 100%
+                        scale = 0.8 + (1 - now) * 0.2;
+                        //2. take current_fs to the right(50%) - from 0%
+                        left = ((1 - now) * 50) + "%";
+                        //3. increase opacity of previous_fs to 1 as it moves in
+                        opacity = 1 - now;
+                        current_fs.css({ 'left': left });
+                        previous_fs.css({ 'transform': 'scale(' + scale + ')', 'opacity': opacity });
+                    },
+                    duration: 800,
+                    complete: function () {
+                        current_fs.hide();
+                        animating = false;
+                    },
+                    //this comes from the custom easing plugin
+                    easing: 'easeInOutBack'
+                });
+            });
+
+            //$(".submit").click(function(){
+            //	return false;
+            //})
+
+        });
+    </script>

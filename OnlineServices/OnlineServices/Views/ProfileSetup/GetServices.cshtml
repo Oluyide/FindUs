@@ -1,0 +1,21 @@
+﻿@using OnlineServices.Models
+@model ServicesModel
+@{
+    ViewBag.Title = "Exhibition";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div>
+
+    <ul>
+        @{
+            foreach (var services in Model.services)
+            {
+                <li> <img src=@services.Images /></li>
+                <li>@services.ServiceName</li>
+
+            }
+        }
+    </ul>
+
+</div>

@@ -1,0 +1,110 @@
+﻿@using OnlineServices.Models
+@model LoginViewModel
+@{
+    ViewBag.Title = "Log in";
+    Layout = "~/Views/Shared/_accountLayout.cshtml";
+}
+
+@*<h2>@ViewBag.Title.</h2>*@
+<div class="row login-style">
+    <div class="col-md-8 col-md-offset-4">
+        <div class=""></div>
+        <section id="loginForm">
+            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+                <h4 style="color:#0094ff; padding-left:60px">LOGIN WITH YOUR ACCOUNT.</h4>
+                @*<hr />*@  <br />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                <div class="col-md-offset-1 acct-style">  @Html.LabelFor(m => m.UserName, new { @class = "col-md-2 control-label col-md-offset-1" })</div>
+                    <br />
+                    <br />
+                    <div class="col-md-6">
+                        @Html.TextBoxFor(m => m.UserName, new { @class = "form-control login-input", placeholder = "User name" })
+                        @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-1 acct-style">@Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label col-md-offset-1" })</div>
+                    <br/>
+                    <br/>
+                    <div class="col-md-6">
+                        @Html.PasswordFor(m => m.Password, new { @class = "form-control pass", placeholder="Password" })
+                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <div class="checkbox check">
+                            @Html.CheckBoxFor(m => m.RememberMe)
+                            @Html.LabelFor(m => m.RememberMe)
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Log in" class="btn btn-primary" />
+                    </div>
+                </div>
+    <div class="col-md-offset-2">
+        @Html.ActionLink("Register as a new user", "Register")
+    </div>
+                @* Enable this once you have account confirmation enabled for password reset functionality
+                    <p>
+                        @Html.ActionLink("Forgot your password?", "ForgotPassword")
+                    </p>*@
+            }
+        </section>
+        <br />
+        <div>
+            <img src="~/Images/advrt1.jpg" class="img-responsive" />
+        </div>
+
+        <br />
+
+        @*<div class="">
+            <section id="socialLoginForm">
+                @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
+            </section>
+        </div>*@
+    </div>
+    @*<div class="col-md-4">
+        <section id="socialLoginForm">
+            @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
+        </section>
+    </div>*@
+</div>
+
+<div class="row l-style">
+    <div class="col-md-4">
+        <h3 class="text-center">
+            <i class="fa fa-user-plus fa-2x"></i><br />
+            <strong>Service Providers</strong>
+        </h3>    <p class="text-center">
+            Get service providers all over Nigeria who are Professionals at what they do and get the job done.
+        </p>
+    </div>
+    <div class="col-md-4">
+        @*<span class=""><i class="fa fa-user-plus fa-3x"></i></span>*@
+        <h3 class="text-center">
+            <i class="fa fa-archive fa-2x"></i><br />
+            <strong>Look for Jobs</strong>
+        </h3>
+        <p class="text-center">
+            Look for jobs from the contests' pool put out by various users in different categories.
+        </p>
+    </div>
+    <div class="col-md-4">
+        <h3 class="text-center">
+            <i class="fa fa-envelope-o fa-2x"></i><br />
+            <strong>Open an Account</strong>
+        </h3>   <p class="text-center">
+            Open an account on our platform and easily do transactions with great service providers.
+        </p>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

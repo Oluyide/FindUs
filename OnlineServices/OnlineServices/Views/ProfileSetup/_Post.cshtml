@@ -1,0 +1,32 @@
+﻿@using OnlineServices.Models
+@model ProfilingModel
+
+<div class="form-group col-md-offset-2">
+    @using (Ajax.BeginForm("ProfilePage", "ProfileSetup", new AjaxOptions { HttpMethod = "post" }, new { @class = "", @id = "formId" }))//(Ajax.BeginForm("ProfilePage", "ProfileSetup", FormMethod.Post, new { name = "loginForm", id = "loginForm", @class = "form-group-md col-lg-7 off-set-3" }))
+    {
+        @Html.TextAreaFor(x => x.Post, new { name = "", id = "post", @class = "form-group  col-md-7",placeholder="Please Post a comment your customers are waiting" })
+        <button style="visibility: hidden" type="submit" id="loginButton" name="loginButton"></button>
+    }
+</div>
+
+<br />
+
+<div id="container" class="col-md-offset-2 col-md-6" style="height:420px; overflow-y:scroll;background-color:cornsilk">
+    <p>Previous Posts</p>
+    @if (Model.postList != null)
+    {
+        foreach (var t in Model.postList)
+        {
+            <ul id="postlist" class="list-group">
+
+                <li class="list-group-item">
+                    @Html.DisplayFor(x => t.Post)
+                    <br />
+                    <i style="color:#beb8b8">@Html.DisplayFor(x => t.timeposted)</i>
+                </li>
+
+            </ul>
+        }
+    }
+</div>
+

@@ -1,0 +1,287 @@
+﻿@model OnlineServices.Models.RegisterViewModel
+
+@{
+    ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/_accountLayout.cshtml";
+}
+
+<div class="banner-title">
+    <div class="row">
+        <div class="col-md-12">
+           <h1> Sign up! with us</h1>
+        <p class="cfloat  w60">
+            Open an account with us today using your email address and you get verified to  watch your business grow. Findus.com promotes Nigerian businesses - let's help your business
+        </p>
+    </div></div>
+
+</div>
+
+
+
+<div class="row">
+    <div class="boundary">
+        <div class="col-md-6 leftcol-style" style="">
+
+            <div>
+                @if (TempData["Register"] != null)
+                {
+                    <div class="alert alert-danger">
+                        @TempData["Register"].ToString();
+                        <a href="#" class="close">&times;</a>
+                    </div>
+                }
+            </div>
+            @*<h1 class="col-lg-offset-5">findus</h1>*@
+
+            @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+                <h2 style="color:#00a65a" class="reg-style">Please! provide your details.</h2>
+              
+                <hr class="colorgraph">
+                @Html.ValidationSummary("", new { @class = "text-danger" })
+
+                <div class="form-group">
+                    <div class="col-md-10 col-md-offset-1">
+                        <div class="required-field-block">
+                            @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control ", placeholder = "First Name", tabindex = "1" })
+                            <div class="required-icon">
+                                <div class="text">*</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-10 col-md-offset-1">
+                        <div class="required-field-block">
+                            @Html.TextBoxFor(m => m.LastName, new { @class = "form-control ", placeholder = "Last Name", tabindex = "2" })
+                            <div class="required-icon">
+                                <div class="text">*</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                @*<div class="form-group">
+                    <input type="text" name="display_name" id="display_name" class="form-control input-lg" placeholder="Display Name" tabindex="3">
+                </div>*@
+
+                <div class="form-group">
+                    <div class="col-md-10 col-md-offset-1">
+                        <div class="required-field-block">
+                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control ", placeholder = "Email Address", tabindex = "4" })
+                            <div class="required-icon">
+                                <div class="text">*</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+    <div class="form-group">
+        <div class="col-md-10 col-md-offset-1">
+            <div class="required-field-block">
+                @Html.TextBoxFor(m => m.UserName, new { @class = "form-control ", placeholder = "Username", tabindex = "4" })
+                <div class="required-icon">
+                    <div class="text">*</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+                <div class="form-group">
+                    <div class="col-md-10 col-md-offset-1">
+                        <div class="required-field-block">
+                            @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Password", tabindex = "5" })
+                        </div>
+                        @*<div class="required-icon form-group required">
+                <div class="text">*</div>
+            </div>*@
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-10 col-md-offset-1">
+                        <div class="required-field-block">
+                            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control ", placeholder = "Enter Password Again", tabindex = "6" })
+                        </div>
+                        @*<div class="required-icon form-group required">
+                <div class="text">*</div>
+            </div>*@
+                    </div>
+                </div>
+
+    <div class="form-group">
+        <div class="col-md-10 col-md-offset-1">
+            <div class="required-field-block">
+                @Html.TextBoxFor(m => m.Phonenumber, new { @class = "form-control ", placeholder = "Phone Number", tabindex = "2" })
+                <div class="required-icon">
+                    <div class="text">*</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-10 col-md-offset-1">
+            <div class="required-field-block">
+                @Html.TextAreaFor(m => m.Address, new { @class = "form-control ", placeholder = "Official/Home Address", tabindex = "2" })
+                <div class="required-icon">
+                    <div class="text">*</div>
+                </div>
+            </div>
+        </div>
+    </div>
+                <div class="row">
+                    @*<div class="col-xs-4 col-sm-3 col-md-3">
+                        <span class="button-checkbox">
+                            <button type="button" class="btn" data-color="info" tabindex="7">I Agree</button>
+                            <input type="checkbox" name="t_and_c" id="t_and_c" class="hidden" value="1">
+                        </span>
+                    </div>*@
+                    <div class="col-md-10 col-md-offset-1">
+                        By clicking <strong class="label label-success">Register</strong>, you agree to the <a href="#" data-toggle="modal" data-target="#t_and_c_m">Terms and Conditions</a> set out by this site, including our Cookie Use.
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-10 col-md-offset-1">
+                        <button type="submit" value="Register" class="btn btn-success btn-block btn-lg" tabindex="7">Register</button>
+                    </div>
+                </div>
+
+            }
+
+
+            @*<div class="row">
+                <div class="col-md-2 col-md-offset-5"><h4><strong><i>OR</i></strong></h4></div>
+            </div>*@
+
+            @*<div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <button class=" btn-lg btn btn-primary btn-block">Countinue with Facebook</button>
+                </div>
+
+            </div>*@
+            <br />
+            <div class="col-md-offset-1">
+                <img src="~/Images/advrt.jpg" class="img-responsive" />
+            </div>
+        </div>
+        <div class="col-md-6" style="padding-top:0px">
+
+            <img src="~/Images/photosplash.png" class="img-responsive hidden-xs" />
+
+            @*<div class="row" style="padding-top:30px">
+                <div class="col-md-10 col-md-offset-1">
+                    <button class=" btn-lg btn btn-primary btn-block">Countinue with Facebook</button>
+                </div>
+
+            </div>*@
+            <br />
+
+               
+                    <div id="socialLoginForm">
+                        @Html.Partial("_ExternalLoginsListPartial", new OnlineServices.Models.ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
+                    </div>
+                
+           
+        </div>
+        @*<p class="clearfix"></p>*@
+     
+        
+</div>
+    
+</div>
+
+@*<div class="row btm-style">
+    <div class="col-md-4">
+        <h3 class="text-center">
+            <i class="fa fa-user-plus fa-2x"></i><br />
+            <strong>Service Providers</strong>
+        </h3>    <p class="text-center">
+    Get service providers all over Nigeria who are Professionals at what they do and get the job done.
+</p>
+    </div>
+    <div class="col-md-4">
+        <span class=""><i class="fa fa-user-plus fa-3x"></i></span>
+        <h3 class="text-center">
+                  <i class="fa fa-archive fa-2x"></i><br />
+        <strong>Look for Jobs</strong></h3>
+        <p class="text-center">
+            Look for jobs from the contests' pool put out by various users in different categories.
+        </p>
+    </div>
+    <div class="col-md-4">
+        <h3 class="text-center">
+            <i class="fa fa-envelope-o fa-2x"></i><br />
+            <strong>Open an Account</strong>
+        </h3>   <p class="text-center">
+    Open an account on our platform and easily do transactions with great service providers.
+</p>
+    </div>
+</div>*@
+
+
+
+    <!-- odal -->
+            <div class="modal fade" id="t_and_c_m" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h4 class="modal-title" id="myModalLabel">Terms & Conditions</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>Biodun and Sunday</p>
+                            @*<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique, itaque, modi, aliquam nostrum at sapiente consequuntur natus odio reiciendis perferendis rem nisi tempore possimus ipsa porro delectus quidem dolorem ad.</p>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique, itaque, modi, aliquam nostrum at sapiente consequuntur natus odio reiciendis perferendis rem nisi tempore possimus ipsa porro delectus quidem dolorem ad.</p>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique, itaque, modi, aliquam nostrum at sapiente consequuntur natus odio reiciendis perferendis rem nisi tempore possimus ipsa porro delectus quidem dolorem ad.</p>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique, itaque, modi, aliquam nostrum at sapiente consequuntur natus odio reiciendis perferendis rem nisi tempore possimus ipsa porro delectus quidem dolorem ad.</p>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique, itaque, modi, aliquam nostrum at sapiente consequuntur natus odio reiciendis perferendis rem nisi tempore possimus ipsa porro delectus quidem dolorem ad.</p>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique, itaque, modi, aliquam nostrum at sapiente consequuntur natus odio reiciendis perferendis rem nisi tempore possimus ipsa porro delectus quidem dolorem ad.</p>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique, itaque, modi, aliquam nostrum at sapiente consequuntur natus odio reiciendis perferendis rem nisi tempore possimus ipsa porro delectus quidem dolorem ad.</p>*@
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">I Agree</button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
+       
+
+
+@*@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <h4>Create a new account.</h4>
+    <hr />
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" class="btn btn-default" value="Register" />
+        </div>
+    </div>
+}*@
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

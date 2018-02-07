@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="c451fc3abcba48bb86206d99c6aa66ce" Name="Diagram1" ZoomLevel="89" >
+        <EntityTypeShape EntityType="ServicesModel.Country" Width="1.5" PointX="3.75" PointY="0.75" />
+        <EntityTypeShape EntityType="ServicesModel.State" Width="1.5" PointX="0.625" PointY="4.25" />
+        <EntityTypeShape EntityType="ServicesModel.City" Width="1.5" PointX="2.75" PointY="4.25" />
+        <EntityTypeShape EntityType="ServicesModel.LGA" Width="1.5" PointX="5.375" PointY="4.125" />
+        <EntityTypeShape EntityType="ServicesModel.User" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="ServicesModel.UserProfile" Width="1.5" PointX="0.75" PointY="6.75" />
+        <EntityTypeShape EntityType="ServicesModel.Exhibition" Width="1.5" PointX="6.375" PointY="0.75" />
+        <EntityTypeShape EntityType="ServicesModel.AspNetRole" Width="1.5" PointX="3.375" PointY="6.875" />
+        <EntityTypeShape EntityType="ServicesModel.AspNetUserRole" Width="1.5" PointX="6" PointY="6.875" />
+        <AssociationConnector Association="ServicesModel.FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId" />
+        <EntityTypeShape EntityType="ServicesModel.service" Width="1.5" PointX="7.375" PointY="4.125" />
+        <EntityTypeShape EntityType="ServicesModel.UserService" Width="1.5" PointX="8.375" PointY="7.125" />
+        <EntityTypeShape EntityType="ServicesModel.Post" Width="1.5" PointX="8.375" PointY="0.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

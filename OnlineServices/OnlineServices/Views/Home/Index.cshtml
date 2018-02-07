@@ -1,0 +1,176 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+    Layout = "~/Views/Shared/_LandingPage.cshtml";
+}
+ @*<h1>findus</h1>*@
+<div class="row">
+    <div class="container body-content">
+    <div id="slider">
+
+        <div>
+            <img src="~/Images/slide1.jpg" class="">
+
+        </div>
+
+        <div>
+            <img src="~/Images/slide2.jpg" class="">
+
+        </div>
+
+
+
+    </div>
+
+    <div class="col-md-offset-1"><img src="~/Images/shadow.png" class="img-responsive"></div>
+    <h2 class="text-center" style="color:#e16a06"><strong> For any of your service!!, FindUs is here to help!!</strong></h2>
+    <center>
+        @if (!User.Identity.IsAuthenticated)
+        {
+            <button class=" btn-lg btn btn-facebook" onclick="@("window.location.href='" + @Url.Action("Register", "Account") + "'");">Create Your Service For Free</button>
+        }
+        @*@if (User.Identity.IsAuthenticated)
+            {
+                <button class=" btn-lg btn btn-primary" onclick="@("window.location.href='" + @Url.Action("Login", "Account") + "'");">Login</button>
+            }*@
+
+    </center>
+    @*<section>
+        <div class="col-md-offset-3">
+            
+            <img src="~/Images/advrt.jpg" class="img-responsive">
+        </div>
+    </section>*@
+        </div>
+</div>
+@*<div class="row" >
+    <div class="container body-content">
+    <div class="col-md-4 card-top">
+
+        <div class="panel bg_purple shrink">
+
+            <div class="panel-body">
+
+                <div class="text-center" style="margin-top:10px;color:#ffffff">
+                    <i class="fa fa-users fa-5x"></i>
+                    <p style="font-size:18px; font-family:Calibri; color:#ffffff">Create an account as a user</p>
+
+                </div>
+
+            </div>
+         
+        </div>
+
+
+
+    </div>
+    <div class="col-md-4 card-top">
+
+        <div class="panel bg_green shrink">
+
+            <div class="panel-body">
+
+                <div class="text-center" style="margin-top:10px;color:#ffffff">
+                    <i class="fa fa-search-plus fa-5x"></i>
+                    <p style="font-size:18px; font-family:Calibri; color:#ffffff">Search for services </p>
+
+                </div>
+
+            </div>
+         
+        </div>
+
+
+
+    </div>
+    <div class="col-md-4 card-top">
+
+        <div class="panel bg_brown shrink">
+
+            <div class="panel-body">
+
+                <div class="text-center" style="margin-top:10px;color:#ffffff">
+                    <i class="fa fa-envelope fa-5x"></i>
+                    <p style="font-size:18px; font-family:Calibri; color:#ffffff">Drop a message for service needed </p>
+
+                </div>
+
+            </div>
+          
+        </div>
+
+
+
+    </div>
+        </div>
+</div>*@
+
+   
+<div class="cat_bg">
+   <div class="container body-content">
+       <h1 class="text-center" style="color:#e16a06">Popular Categories</h1>
+       <br />
+       <div class="row">
+           <div class="col-md-3 col-sm-3 col-xs-3">
+               <img src="~/Images/fash1.jpg" class="img-responsive">
+           </div>
+           <div class="col-md-3  col-sm-3 col-xs-3">
+               <img src="~/Images/event.jpg" class="img-responsive">
+           </div>
+           <div class="col-md-3 col-sm-3 col-xs-3">
+               <img src="~/Images/ict-1.jpg" class="img-responsive">
+           </div>
+           <div class="col-md-3  col-sm-3 col-xs-3">
+               <img src="~/Images/real-1.jpg" class="img-responsive">
+           </div>
+       </div>
+       <div class="row card-top">
+           <div class="col-md-3  col-sm-3 col-xs-3">
+               <img src="~/Images/kit-1.jpg" class="img-responsive">
+           </div>
+           <div class="col-md-3  col-sm-3 col-xs-3">
+               <img src="~/Images/consult-1.jpg" class="img-responsive">
+           </div>
+           <div class="col-md-3  col-sm-3 col-xs-3">
+               <img src="~/Images/house-1.jpg" class="img-responsive">
+           </div>
+           <div class="col-md-3  col-sm-3 col-xs-3">
+               <img src="~/Images/electrical-1.jpg" class="img-responsive">
+           </div>
+       </div>
+       
+   </div>
+
+</div>
+
+@*<div class="container body-content">
+    <div class="row l-style">
+        <div class="col-md-4">
+            <h3 class="text-center">
+                <i class="fa fa-user-plus fa-2x"></i><br />
+                <strong>Service Providers</strong>
+            </h3>    <p class="text-center">
+                Get service providers all over Nigeria who are Professionals at what they do and get the job done.
+            </p>
+        </div>
+        <div class="col-md-4">
+            <span class=""><i class="fa fa-user-plus fa-3x"></i></span>
+            <h3 class="text-center">
+                <i class="fa fa-archive fa-2x"></i><br />
+                <strong>Look for Jobs</strong>
+            </h3>
+            <p class="text-center">
+                Look for jobs from the contests' pool put out by various users in different categories.
+            </p>
+        </div>
+        <div class="col-md-4">
+            <h3 class="text-center">
+                <i class="fa fa-envelope-o fa-2x"></i><br />
+                <strong>Open an Account</strong>
+            </h3>   <p class="text-center">
+                Open an account on our platform and easily do transactions with great service providers.
+            </p>
+        </div>
+    </div>
+</div>*@
+  
+

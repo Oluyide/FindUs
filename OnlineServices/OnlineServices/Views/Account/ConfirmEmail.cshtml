@@ -1,0 +1,53 @@
+﻿@model OnlineServices.Models.ConfirmationModels
+@{
+    ViewBag.Title = "Confirm Email";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title.</h2>
+<div>
+    <div>
+        @if (Session["confirm"] != null)
+        {
+            <div class="alert alert-danger">
+                @Session["confirm"].ToString();
+                <a href="#" class="close">&times;</a>
+            </div>
+        }
+    </div>
+    <div>
+        @if (Session["wrongCode"] != null)
+        {
+            <div class="alert alert-danger">
+                @Session["wrongCode"].ToString();
+                <a href="#" class="close">&times;</a>
+            </div>
+        }
+    </div>
+    <div>
+        @if (Session["ApprovalCode"] != null)
+        {
+            <div class="alert alert-danger">
+                @Session["ApprovalCode"].ToString();
+                <a href="#" class="close">&times;</a>
+            </div>
+        }
+    </div>
+
+    <p>Please type in the you Approval code</p>
+    @using (Html.BeginForm("ConfirmEmail", "Account", FormMethod.Post, new { @class = "form-group", @Id = "form" }))
+    {
+        <div class="form-group col-lg-offset-1">
+            @Html.LabelFor(x => x.AdminCode, new { @class = "" })
+            @Html.TextBoxFor(model => model.AdminCode, new { @Id = "", @class = "form-control input-sm", placeholder = "Verification Code" })
+
+        </div>
+        <button type="submit" class="btn btn-primary col-lg-offset-1" id="submit">Submit</button>
+    }
+    @if(Session["confirm"]!=null)
+    { 
+    <p id="success">
+        Thank you for confirming your Account. Please @Html.ActionLink("Click here to Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
+    </p>
+    }
+</div>

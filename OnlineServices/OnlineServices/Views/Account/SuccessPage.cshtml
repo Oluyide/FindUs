@@ -1,0 +1,21 @@
+﻿@using Microsoft.AspNet.Identity
+@{
+    ViewBag.Title = "SuccessPage";
+    Layout = "~/Views/Shared/_LandingPage.cshtml";
+    <link rel="stylesheet" type="text/css" href="/Content/Site.css" />
+}
+
+
+<div class="sccbox">
+    <h2 style="color: #292d48;">@ViewBag.CongratMessage</h2>
+    
+    <h2 class="congbx" align="center">Congratulations!!!</h2>
+    <p align="center">
+        You have just created an account with Findus.com  </p>
+    
+    <p><span style="color:#ff6a00;">But you are yet to finish...</span> <br /><br />
+        <strong>To complete your Profile, please click on the button below</strong>
+    </p>
+    <a class="btn form-control h3 " href="~/ProfileSetup/ProfileSetup" style="color: white; background-color:#808080; height:50%; width:100%"> PROCEED</a>
+    @*<button class="btn btn-large btn-block" type="button"><a href="http://localhost:17750/ProfileSetup/ProfileSetup"><h2>PROCEEED</h2></a></button>*@
+</div>
